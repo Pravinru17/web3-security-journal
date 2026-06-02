@@ -1,0 +1,132 @@
+# Day 2 Security Journal
+
+## RareSkills - Solidity Data Types
+
+Today I learned about Solidity data types.
+
+### uint256
+
+Used to store positive numbers.
+
+Example:
+
+```solidity
+uint256 public favoriteNumber;
+```
+
+Can be used for:
+
+* Token balances
+* Counters
+* IDs
+
+### bool
+
+Stores true or false values.
+
+```solidity
+bool public isActive;
+```
+
+### address
+
+Stores Ethereum wallet addresses.
+
+```solidity
+address public owner;
+```
+
+I learned that `msg.sender` returns the address that called the function.
+
+### string
+
+Used to store text.
+
+```solidity
+string public name;
+```
+
+### My Takeaway
+
+The most important data types for now are:
+
+* uint256
+* address
+* bool
+* string
+
+I saw all of them in my SimpleStorage contract.
+
+---
+
+## Solodit Finding
+
+Severity: Medium
+
+Category: Access Control
+
+Issue:
+
+A function that should only be used by the owner could be called by anyone.
+
+Example:
+
+```solidity
+function changeOwner(address newOwner) public {
+    owner = newOwner;
+}
+```
+
+Why this is dangerous:
+
+An attacker can become the owner and control the contract.
+
+Fix:
+
+```solidity
+modifier onlyOwner() {
+    require(msg.sender == owner, "Not owner");
+    _;
+}
+```
+
+Use `onlyOwner` on sensitive functions.
+
+### Lesson Learned
+
+Whenever I write a function, I should ask:
+
+"Who should be allowed to call this?"
+
+---
+
+## What I Built Today
+
+SimpleStorage.sol
+
+Concepts used:
+
+* uint256
+* string
+* bool
+* address
+* constructor
+* msg.sender
+
+Successfully deployed and tested on Remix.
+
+---
+
+## Ethernaut Level 1
+
+Completed Fallback level.
+
+Learned that ownership logic can sometimes be abused if functions are not designed carefully.
+
+---
+
+## Tomorrow Goal
+
+* Learn mappings
+* Build Bank contract
+* Complete Ethernaut Level 2
