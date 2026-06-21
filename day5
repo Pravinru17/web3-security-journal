@@ -1,0 +1,12 @@
+
+## Reentrancy
+
+A reentrancy attack occurs when an external contract calls back into a vulnerable function before state updates are completed.
+
+### Vulnerable Pattern
+
+```solidity
+(bool success,) = msg.sender.call{value: amount}("");
+require(success);
+
+balances[msg.sender] -= amount;
